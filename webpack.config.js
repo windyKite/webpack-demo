@@ -4,9 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    app: './src/index.js',
+    vendor: ['react', 'react-dom']
+  },
   output: {
-    filename: 'main.js',
+    filename: '[name].[contenthash:8].js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -43,7 +46,16 @@ module.exports = {
       filename:'[name].[contenthash:8].css'
     }),
     new HtmlWebpackPlugin({
-      template: "src/index.html"
+      template: "src/index.html",
+      minify: {
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      }
     })
   ],
   resolve: {
