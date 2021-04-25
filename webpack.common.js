@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  cache: true,
   entry: {
     app: "./src/index.js",
     vendor: ["react", "react-dom"],
