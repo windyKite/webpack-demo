@@ -1,17 +1,17 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
-    app: './src/index.js',
-    vendor: ['react', 'react-dom']
+    app: "./src/index.js",
+    vendor: ["react", "react-dom"],
   },
   output: {
-    filename: '[name].[contenthash:8].js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "[name].[contenthash:8].js",
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -19,11 +19,11 @@ module.exports = {
         test: /\.m?(js|jsx|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       // css loader 配置
       {
@@ -32,19 +32,19 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           "css-modules-typescript-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
-              modules: true
-            }
+              modules: true,
+            },
           },
           "sass-loader",
         ],
       },
-    ]
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename:'[name].[contenthash:8].css'
+      filename: "[name].[contenthash:8].css",
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
@@ -55,13 +55,13 @@ module.exports = {
         removeRedundantAttributes: true,
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true
-      }
+        useShortDoctype: true,
+      },
     }),
     new CleanWebpackPlugin(),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx']
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   optimization: {
     minimize: true,
@@ -70,5 +70,26 @@ module.exports = {
       // `...`,
       new CssMinimizerPlugin(),
     ],
+    splitChunks: {
+      chunks: "async",
+      minSize: 20000,
+      minRemainingSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
 };
