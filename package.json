@@ -11,6 +11,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@types/react": "^17.0.3",
     "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "css-modules-typescript-loader": "^4.0.1",
