@@ -10,19 +10,22 @@ module.exports = {
   output: {
     filename: "[name].[contenthash:8].js",
     path: path.resolve(__dirname, "dist"),
-    clean: true
+    clean: true,
   },
   module: {
     rules: [
       {
         test: /\.m?(js|jsx|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
+        use: [
+          "thread-loader",
+          {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true,
+            },
           },
-        },
+        ],
       },
       // css loader 配置
       {
@@ -44,7 +47,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash:8].css",
-      chunkFilename: '[id].[contenthash].css',
+      chunkFilename: "[id].[contenthash].css",
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
@@ -57,9 +60,9 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true,
       },
-    })
+    }),
   ],
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
-}
+};

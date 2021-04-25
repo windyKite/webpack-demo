@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = merge(common, {
+  mode: "production",
   plugins: [new CleanWebpackPlugin()],
   optimization: {
     minimize: true,
