@@ -27,7 +27,7 @@ module.exports = {
       },
       // css loader 配置
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.less$/i,
         use: [
           MiniCssExtractPlugin.loader,
           "css-modules-typescript-loader",
@@ -37,7 +37,7 @@ module.exports = {
               modules: true,
             },
           },
-          "sass-loader",
+          "less-loader",
         ],
       },
     ],

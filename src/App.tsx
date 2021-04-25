@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './style/style.scss'
+import style from './style/style.less'
 import A from './A'
 
 const App: React.FunctionComponent = () => {
