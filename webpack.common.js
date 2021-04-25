@@ -1,8 +1,6 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
@@ -12,6 +10,7 @@ module.exports = {
   output: {
     filename: "[name].[contenthash:8].js",
     path: path.resolve(__dirname, "dist"),
+    clean: true
   },
   module: {
     rules: [
@@ -45,6 +44,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash:8].css",
+      chunkFilename: '[id].[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
@@ -57,39 +57,9 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true,
       },
-    }),
-    new CleanWebpackPlugin(),
+    })
   ],
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      // 在 webpack@5 中，你可以使用 `...` 语法来扩展现有的 minimizer（即 `terser-webpack-plugin`），将下一行取消注释
-      // `...`,
-      new CssMinimizerPlugin(),
-    ],
-    splitChunks: {
-      chunks: "async",
-      minSize: 20000,
-      minRemainingSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      enforceSizeThreshold: 50000,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-  },
-};
+}
