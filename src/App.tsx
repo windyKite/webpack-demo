@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './style/style.less'
 import A from './A'
+console.log(style)
 
 const App: React.FunctionComponent = () => {
   return (
